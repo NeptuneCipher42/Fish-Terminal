@@ -10,6 +10,7 @@ git clone <your-repo-url> SharkTerminal
 cd SharkTerminal
 bash install.sh --full --profile shark
 ```
+**Important Note: Add `exec fish` to `.bashrc` or `.zshrc` to start fishterm on terminal boot.**
 
 ### Windows (PowerShell)
 ```powershell
@@ -38,7 +39,6 @@ bash scripts/switch-profile.sh shark
 bash scripts/switch-profile.sh clean
 bash scripts/switch-profile.sh tide
 ```
-**Important Note: Add `exec fish` to `.bashrc` or `.zshrc` to start fishterm on terminal boot.**
 ## Fish Plugins
 Defined in `config/fish/plugins.txt`:
 - `jorgebucaran/fisher`
@@ -72,6 +72,3 @@ See full command list in `docs/COMMANDS.md`.
 - If OMP fails to install, switch to Tide profile and continue.
 - Installer adds a managed fish handoff block to `~/.bashrc` (and `~/.zshrc` if present) so new terminals auto-enter fish.
 - Temporarily bypass handoff with `export SHARKTERMINAL_NO_HANDOFF=1`.
-
-## License
-MIT
