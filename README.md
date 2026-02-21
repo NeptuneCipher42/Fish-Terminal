@@ -38,7 +38,7 @@ bash scripts/switch-profile.sh shark
 bash scripts/switch-profile.sh clean
 bash scripts/switch-profile.sh tide
 ```
-
+**Important Note: Add `exec fish` to `.bashrc` or `.zshrc` to start fishterm on terminal boot.**
 ## Fish Plugins
 Defined in `config/fish/plugins.txt`:
 - `jorgebucaran/fisher`
