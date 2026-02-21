@@ -6,7 +6,7 @@ Fish-first terminal customization with shark vibes, Oh My Posh default, Tide fal
 
 ### Linux/macOS
 ```bash
-git clone <your-repo-url> SharkTerminal
+git clone https://github.com/NeptuneCipher42/Fish-Terminal.git SharkTerminal
 cd SharkTerminal
 bash install.sh --full --profile shark
 ```
@@ -14,7 +14,7 @@ bash install.sh --full --profile shark
 
 ### Windows (PowerShell)
 ```powershell
-git clone <your-repo-url> SharkTerminal
+git clone https://github.com/NeptuneCipher42/Fish-Terminal.git SharkTerminal
 cd SharkTerminal
 pwsh -File .\install.ps1 -Full -Profile shark
 ```
