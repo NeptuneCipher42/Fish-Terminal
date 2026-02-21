@@ -1,5 +1,5 @@
 # SharkTerminal
-
+<img width="854" height="389" alt="image" src="https://github.com/user-attachments/assets/941699db-36a0-4079-9c21-b0c28cbefae4" />
 Fish-first terminal customization with shark vibes, Oh My Posh default, Tide fallback, plugin automation, and cross-platform install scripts.
 
 ## Quick Start
