@@ -12,13 +12,6 @@ bash install.sh --full --profile shark
 ```
 **Important Note: Add `exec fish` to `.bashrc` or `.zshrc` to start fishterm on terminal boot.**
 
-### Windows (PowerShell)
-```powershell
-git clone https://github.com/NeptuneCipher42/Fish-Terminal.git SharkTerminal
-cd SharkTerminal
-pwsh -File .\install.ps1 -Full -Profile shark
-```
-
 ## What You Get
 - Fish-centric terminal setup with shark-themed greeting and prompt
 - Custom FISHTERM shark ASCII startup banner on terminal open
