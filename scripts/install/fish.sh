@@ -62,12 +62,17 @@ fi
 
 if command -v fish >/dev/null 2>&1; then
   if ! fish -c "type -q fisher" >/dev/null 2>&1; then
-    fish -c "curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher"
+    fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher" || \
+      echo "[WARN] Could not install fisher; skipping plugin installation"
   fi
-  while IFS= read -r plugin; do
-    [[ -z "$plugin" ]] && continue
-    fish -c "fisher install $plugin" || true
-  done < "${ROOT_DIR}/config/fish/plugins.txt"
+  if fish -c "type -q fisher" >/dev/null 2>&1; then
+    while IFS= read -r plugin; do
+      [[ -z "$plugin" ]] && continue
+      fish -c "fisher install $plugin" || echo "[WARN] Could not install plugin: $plugin"
+    done < "${ROOT_DIR}/config/fish/plugins.txt"
+  else
+    echo "[WARN] fisher not available; skipping plugin installation"
+  fi
 else
   echo "[WARN] fish binary not found; skipping fisher plugin installation"
 fi
