@@ -3,4 +3,4 @@ PatrickF1/fzf.fish
 jethrokuan/z
 meaningful-ooo/sponge
 franciscolourenco/done
-ilancosman/tide
+ilancosman/tide@v6
