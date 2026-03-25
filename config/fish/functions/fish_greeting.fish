@@ -8,12 +8,16 @@ function fish_greeting
     set -l kraken_banner "$HOME/.config/fish/banner/kraken.txt"
     set -l fishterm_banner "$HOME/.config/fish/banner/fishterm.txt"
     set -l term_width $COLUMNS
-    if test -z "$term_width"
-        set term_width 120
+    if test -z "$term_width"; or test "$term_width" -eq 0
+        set term_width 80
     end
     echo ""
+    set_color 5fd7ff
+    echo "🐙  Cracken's Cavern  🐙"
+    set_color normal
+    echo ""
     if test -f "$kraken_banner"; and test -f "$fishterm_banner"
-        if test "$term_width" -ge 145
+        if test "$term_width" -ge 76
             set -l left_lines (string split \n -- (command cat "$kraken_banner"))
             set -l right_lines (string split \n -- (command cat "$fishterm_banner"))
             set -l max_lines (math "max(" (count $left_lines) "," (count $right_lines) ")")
@@ -30,7 +34,7 @@ function fish_greeting
 
                 if test -n "$right"
                     set_color 5fd7ff
-                    printf "%-36s" "$left"
+                    printf "%-30s" "$left"
                     set_color brblue
                     printf "  %s\n" "$right"
                 else
