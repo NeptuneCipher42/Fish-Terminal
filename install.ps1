@@ -39,7 +39,7 @@ Write-Info 'Stage 1: Installing system dependencies...'
 # ---------------------------------------------------------------------------
 Write-Info 'Stage 2: Deploying PowerShell configuration...'
 $PSProfile = if ($Profile -eq 'tide') { 'shark' } else { $Profile }  # tide is fish-only; PS uses shark fallback
-& (Join-Path $Root 'scripts/install/powershell.ps1') -Profile $PSProfile -DryRun:$DryRun
+& (Join-Path $Root 'scripts/install/powershell.ps1') -SharkProfile $PSProfile -DryRun:$DryRun
 
 # ---------------------------------------------------------------------------
 # Stage 3 — Deploy fish config (if fish is available — WSL/Git Bash)

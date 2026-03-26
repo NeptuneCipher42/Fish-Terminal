@@ -7,24 +7,25 @@
 #################################################################################################
 param(
   [ValidateSet('shark','clean')]
-  [string]$Profile = 'shark',
+  [string]$SharkProfile = 'shark',
   [switch]$DryRun
 )
 
-$Root      = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
+$Root       = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $InstallDir = Join-Path $HOME '.config/sharkterminal'
 $PSInstall  = Join-Path $InstallDir 'powershell'
 $ThemeDir   = Join-Path $InstallDir 'themes'
 $BannerDir  = Join-Path $InstallDir 'banner'
+$PSProfilePath = $PROFILE   # capture built-in $PROFILE before any shadowing risk
 
-function Write-Info  ($msg) { Write-Host "[INFO] $msg" }
-function Write-Ok    ($msg) { Write-Host "[ OK ] $msg" -ForegroundColor Green }
-function Write-Warn  ($msg) { Write-Host "[WARN] $msg" -ForegroundColor Yellow }
+function Write-Info ($msg) { Write-Host "[INFO] $msg" }
+function Write-Ok   ($msg) { Write-Host "[ OK ] $msg" -ForegroundColor Green }
+function Write-Warn ($msg) { Write-Host "[WARN] $msg" -ForegroundColor Yellow }
 
 if ($DryRun) {
   Write-Info "DRY-RUN: Would deploy PowerShell config to $PSInstall"
-  Write-Info "DRY-RUN: Would set active profile to $Profile"
-  Write-Info "DRY-RUN: Would write `$PROFILE at $PROFILE"
+  Write-Info "DRY-RUN: Would set active profile to $SharkProfile"
+  Write-Info "DRY-RUN: Would write `$PROFILE at $PSProfilePath"
   return
 }
 
@@ -38,22 +39,22 @@ foreach ($dir in @($PSInstall, "$PSInstall/profiles", $ThemeDir, $BannerDir)) {
 # ---------------------------------------------------------------------------
 # Backup existing $PROFILE
 # ---------------------------------------------------------------------------
-if (Test-Path $PROFILE) {
+if (Test-Path $PSProfilePath) {
   $BackupDir = Join-Path $InstallDir 'backups/powershell'
   New-Item -ItemType Directory -Force -Path $BackupDir | Out-Null
   $Stamp  = Get-Date -Format 'yyyyMMdd-HHmmss'
   $Target = Join-Path $BackupDir "profile_$Stamp.ps1"
-  Copy-Item $PROFILE $Target -Force
+  Copy-Item $PSProfilePath $Target -Force
   Write-Ok "Backed up existing PowerShell profile to $Target"
 }
 
 # ---------------------------------------------------------------------------
 # Deploy config files
 # ---------------------------------------------------------------------------
-Copy-Item (Join-Path $Root 'config/powershell/profile.ps1')         (Join-Path $PSInstall 'profile.ps1') -Force
-Copy-Item (Join-Path $Root "config/powershell/profiles/$Profile.ps1") (Join-Path $PSInstall 'profiles/$Profile.ps1') -Force
-Copy-Item (Join-Path $Root 'config/powershell/profiles/shark.ps1')  (Join-Path $PSInstall 'profiles/shark.ps1') -Force
-Copy-Item (Join-Path $Root 'config/powershell/profiles/clean.ps1')  (Join-Path $PSInstall 'profiles/clean.ps1') -Force
+Copy-Item (Join-Path $Root 'config/powershell/profile.ps1')                    (Join-Path $PSInstall 'profile.ps1') -Force
+Copy-Item (Join-Path $Root "config/powershell/profiles/$SharkProfile.ps1")     (Join-Path $PSInstall "profiles/$SharkProfile.ps1") -Force
+Copy-Item (Join-Path $Root 'config/powershell/profiles/shark.ps1')             (Join-Path $PSInstall 'profiles/shark.ps1') -Force
+Copy-Item (Join-Path $Root 'config/powershell/profiles/clean.ps1')             (Join-Path $PSInstall 'profiles/clean.ps1') -Force
 
 # Deploy themes and banners (shared with fish)
 Get-ChildItem (Join-Path $Root 'themes') -Filter '*.omp.json' |
@@ -62,13 +63,13 @@ Get-ChildItem (Join-Path $Root 'config/fish/banner') -Filter '*.txt' |
   ForEach-Object { Copy-Item $_.FullName $BannerDir -Force }
 
 # Set active profile
-Copy-Item (Join-Path $PSInstall "profiles/$Profile.ps1") (Join-Path $PSInstall 'active-profile.ps1') -Force
-Write-Ok "Active PowerShell profile set to: $Profile"
+Copy-Item (Join-Path $PSInstall "profiles/$SharkProfile.ps1") (Join-Path $PSInstall 'active-profile.ps1') -Force
+Write-Ok "Active PowerShell profile set to: $SharkProfile"
 
 # ---------------------------------------------------------------------------
 # Wire up $PROFILE to dot-source from install directory
 # ---------------------------------------------------------------------------
-$ProfileDir = Split-Path -Parent $PROFILE
+$ProfileDir = Split-Path -Parent $PSProfilePath
 if (-not (Test-Path $ProfileDir)) {
   New-Item -ItemType Directory -Force -Path $ProfileDir | Out-Null
 }
@@ -76,8 +77,8 @@ if (-not (Test-Path $ProfileDir)) {
 $SourceLine = ". `"$(Join-Path $PSInstall 'profile.ps1')`""
 
 # Only inject once — idempotent
-if (Test-Path $PROFILE) {
-  $Existing = Get-Content $PROFILE -Raw
+if (Test-Path $PSProfilePath) {
+  $Existing = Get-Content $PSProfilePath -Raw
 } else {
   $Existing = ''
 }
@@ -85,11 +86,11 @@ if (Test-Path $PROFILE) {
 if ($Existing -notmatch 'sharkterminal') {
   $Header = '# >>> SharkTerminal PowerShell >>>'
   $Footer = '# <<< SharkTerminal PowerShell <<<'
-  Add-Content $PROFILE ""
-  Add-Content $PROFILE $Header
-  Add-Content $PROFILE $SourceLine
-  Add-Content $PROFILE $Footer
-  Write-Ok "Injected SharkTerminal into: $PROFILE"
+  Add-Content $PSProfilePath ''
+  Add-Content $PSProfilePath $Header
+  Add-Content $PSProfilePath $SourceLine
+  Add-Content $PSProfilePath $Footer
+  Write-Ok "Injected SharkTerminal into: $PSProfilePath"
 } else {
   Write-Info "SharkTerminal block already present in `$PROFILE — skipping injection."
 }
@@ -112,4 +113,4 @@ foreach ($mod in $Modules) {
   }
 }
 
-Write-Ok "PowerShell configuration deployed ($Profile). Restart PowerShell to apply."
+Write-Ok "PowerShell configuration deployed ($SharkProfile). Restart PowerShell to apply."
