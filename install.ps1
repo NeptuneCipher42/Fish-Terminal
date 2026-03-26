@@ -23,6 +23,36 @@ if ($Full)    { $Mode = 'full' }
 function Write-Info ($msg) { Write-Host "[INFO] $msg" }
 function Write-Ok   ($msg) { Write-Host "[ OK ] $msg" -ForegroundColor Green }
 
+# ---------------------------------------------------------------------------
+# Bootstrap — install PowerShell 7 if running in PS5, then re-launch
+# ---------------------------------------------------------------------------
+if ($PSVersionTable.PSVersion.Major -lt 7) {
+  Write-Info "Running in PowerShell $($PSVersionTable.PSVersion) — PowerShell 7+ is recommended."
+
+  if (Get-Command pwsh -ErrorAction SilentlyContinue) {
+    # PS7 is already installed — re-launch this script inside it
+    Write-Info 'PowerShell 7 found. Re-launching installer in pwsh...'
+    $forward = @('-ExecutionPolicy', 'Bypass', '-File', $MyInvocation.MyCommand.Path,
+                 '-Profile', $Profile, "-$Mode")
+    if ($DryRun) { $forward += '-DryRun' }
+    & pwsh @forward
+    exit $LASTEXITCODE
+  }
+
+  Write-Info 'PowerShell 7 not found — installing via winget...'
+  if (Get-Command winget -ErrorAction SilentlyContinue) {
+    winget install --id Microsoft.PowerShell --accept-package-agreements --accept-source-agreements -e
+    Write-Host ''
+    Write-Ok 'PowerShell 7 installed!'
+    Write-Ok 'Close this window, open a new PowerShell terminal, and re-run:'
+    Write-Host "  pwsh -ExecutionPolicy Bypass -File `"$($MyInvocation.MyCommand.Path)`" -$Mode -Profile $Profile" -ForegroundColor Cyan
+    exit 0
+  } else {
+    Write-Warning 'winget not available. Install PowerShell 7 manually from: https://aka.ms/PSWindows'
+    Write-Info 'Continuing in PowerShell 5 — some features may behave differently.'
+  }
+}
+
 Write-Info 'SharkTerminal installer (PowerShell)'
 Write-Info "Mode    : $Mode"
 Write-Info "Profile : $Profile"
