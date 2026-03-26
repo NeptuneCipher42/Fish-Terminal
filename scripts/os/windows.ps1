@@ -50,7 +50,7 @@ if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
 } else {
   foreach ($pkg in $packages) {
     Write-Host "[INFO] winget install $pkg"
-    winget install --id $pkg --accept-package-agreements --accept-source-agreements -e
+    winget install --id $pkg --source winget --accept-package-agreements --accept-source-agreements -e
   }
 }
 
