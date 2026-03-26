@@ -16,9 +16,31 @@ bash install.sh --full --profile shark
 
 > **Note:** Add `exec fish` to `.bashrc` or `.zshrc` to auto-start fish on terminal boot (or let the installer do it for you).
 
+### Windows (PowerShell 7+)
+```powershell
+git clone https://github.com/NeptuneCipher42/Fish-Terminal.git SharkTerminal
+cd SharkTerminal
+pwsh -ExecutionPolicy Bypass -File .\install.ps1 -Full -Profile shark
+```
+
+> **Prerequisites:** [PowerShell 7+](https://aka.ms/install-powershell) and [winget](https://aka.ms/getwinget) (ships with Windows 11; install App Installer from the Microsoft Store on Windows 10).
+> **Nerd Font:** Install a [Nerd Font](https://www.nerdfonts.com/) (e.g. CaskaydiaCove NF) and set it as your terminal font for prompt icons to render correctly.
+
 ---
 
 ## What You Get
+
+### Shell — PowerShell (Windows)
+- Same **shark Oh My Posh theme** as the fish setup — `🦈 user › path › git branch › time` powerline prompt
+- `PSReadLine` with history prediction and list-view suggestions
+- `PSFzf` fuzzy finder — `Ctrl+F` for files, `Ctrl+R` for history
+- `zoxide` smart `cd` with `z <dir>` shortcuts
+- `posh-git` git status integration
+- Modern CLI aliases: `ll`, `la`, `cat` (bat), `ls` (eza) — same shortcuts as fish
+- Git shortcuts: `gs`, `ga`, `gc`, `gp`, `gpl`, `gl`
+- Side-by-side ASCII art greeting on wide terminals (Cracken's Cavern banner)
+- Profile switching: `shark` (full) and `clean` (minimal)
+- Safe timestamped backup of existing `$PROFILE` before install
 
 ### Shell — Fish Terminal
 - Shark-themed greeting with dual ASCII art banners (Kraken + FISHTERM logo)
@@ -117,15 +139,24 @@ export OPENAI_API_KEY="sk-..."          # GPT-4o
 ---
 
 ## Profiles
-- `shark`: full shark aesthetic + OMP prompt + nerd font icons
-- `clean`: minimal OMP theme, lean visuals
-- `tide`: native fish prompt (Tide engine, no OMP needed)
 
-Switch profiles:
+| Profile | Fish | PowerShell | Description |
+|---------|------|------------|-------------|
+| `shark` | ✅ | ✅ | Full shark aesthetic — Oh My Posh + Nerd Font icons + ASCII greeting |
+| `clean` | ✅ | ✅ | Minimal Oh My Posh theme, lean visuals |
+| `tide`  | ✅ | ➡️ shark | Native fish Tide engine (PS falls back to shark) |
+
+Switch profiles — fish:
 ```bash
 bash scripts/switch-profile.sh shark
 bash scripts/switch-profile.sh clean
 bash scripts/switch-profile.sh tide
+```
+
+Switch profiles — PowerShell:
+```powershell
+pwsh -File .\scripts\switch-profile.ps1 -Profile shark
+pwsh -File .\scripts\switch-profile.ps1 -Profile clean
 ```
 
 ---
@@ -143,6 +174,8 @@ Defined in `config/fish/plugins.txt`:
 
 ## Main Commands
 
+### Linux/macOS (bash)
+
 | Command | Description |
 |---------|-------------|
 | `bash install.sh --full --profile shark` | Full install with shark profile |
@@ -152,6 +185,16 @@ Defined in `config/fish/plugins.txt`:
 | `bash scripts/switch-profile.sh shark` | Switch to shark profile |
 | `bash uninstall.sh` | Uninstall and restore backups |
 
+### Windows (PowerShell)
+
+| Command | Description |
+|---------|-------------|
+| `pwsh -File .\install.ps1 -Full -Profile shark` | Full install with shark profile |
+| `pwsh -File .\install.ps1 -Minimal -Profile clean` | Minimal install |
+| `pwsh -File .\install.ps1 -DryRun -Full -Profile shark` | Preview without executing |
+| `pwsh -File .\scripts\switch-profile.ps1 -Profile shark` | Switch to shark profile |
+| `pwsh -File .\scripts\switch-profile.ps1 -Profile clean` | Switch to clean profile |
+
 See full command list in `docs/COMMANDS.md`.
 
 ---
@@ -160,14 +203,23 @@ See full command list in `docs/COMMANDS.md`.
 ```
 SharkTerminal/
 ├── install.sh              # Linux/macOS entry point
-├── install.ps1             # Windows entry point
-├── uninstall.sh            # Uninstall + restore
-├── config/fish/            # Fish shell config, profiles, plugins
+├── install.ps1             # Windows/PowerShell entry point
+├── uninstall.sh            # Uninstall + restore (Linux/macOS)
+├── update.sh               # Config-only updater (Linux/macOS)
+├── config/
+│   ├── fish/               # Fish shell config, profiles, plugins, banners
+│   └── powershell/         # PowerShell profiles (shark, clean)
 ├── scripts/
 │   ├── os/                 # OS-specific dependency installers
 │   ├── install/            # Config + prompt install internals
-│   └── switch-profile.sh   # Profile switcher
-├── themes/                 # Oh My Posh JSON themes
+│   │   ├── fish.sh         # Fish config deployer
+│   │   ├── powershell.ps1  # PowerShell config deployer
+│   │   ├── omp.sh          # Oh My Posh installer (Linux/macOS)
+│   │   ├── tools.sh        # CLI tools installer (Linux/macOS)
+│   │   └── fonts.sh        # Nerd Fonts installer
+│   ├── switch-profile.sh   # Profile switcher (bash)
+│   └── switch-profile.ps1  # Profile switcher (PowerShell — fish + PS)
+├── themes/                 # Oh My Posh JSON themes (shared by fish + PS)
 └── docs/                   # Commands + troubleshooting
 ```
 
@@ -198,9 +250,23 @@ lua/fisher/
 ---
 
 ## Notes
+
+### Safety
+- **Dry run first:** `--dry-run` / `-DryRun` shows every action without making changes.
+- **Existing `$PROFILE` is backed up** to `~/.config/sharkterminal/backups/powershell/` before install.
+- **Idempotent injection:** the PowerShell installer only appends a small sourcing block to `$PROFILE` — it never overwrites it. If the block is already there, it's skipped.
+- **Existing fish config backed up** to `~/.config/fish.backups/` with timestamps.
 - Re-runnable installers — safe to run again on existing setups.
-- Existing fish config backed up to `~/.config/fish.backups/` with timestamps.
+
+### PowerShell
+- Deployed config lives in `~/.config/sharkterminal/powershell/` — separate from `$PROFILE`.
+- To uninstall PS integration: remove the `# >>> SharkTerminal PowerShell >>>` block from `$PROFILE` and delete `~/.config/sharkterminal/`.
+- If OMP fails to render icons, set a [Nerd Font](https://www.nerdfonts.com/) in your terminal emulator settings.
+
+### Fish (Linux/macOS)
 - If OMP fails, switch to `tide` profile: `bash scripts/switch-profile.sh tide`
 - Fish handoff block added to `~/.bashrc` / `~/.zshrc` automatically.
 - Bypass fish handoff: `export SHARKTERMINAL_NO_HANDOFF=1`
-- Neovim startup time: `nvim --startuptime /tmp/startup.log` → analyze with `:Lazy profile`
+
+### Neovim
+- Startup time: `nvim --startuptime /tmp/startup.log` → analyze with `:Lazy profile`

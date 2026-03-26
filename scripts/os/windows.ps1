@@ -2,7 +2,8 @@
 # Author: Nicholas Fisher
 # Date: February 21st 2026
 # Description of Script
-# Windows dependency installer using winget with graceful fallback when winget is unavailable.
+# Windows dependency installer — installs CLI tools via winget and PowerShell modules
+# via Install-Module. Gracefully skips unavailable tools.
 #################################################################################################
 param(
   [ValidateSet('minimal','full')]
@@ -10,6 +11,9 @@ param(
   [switch]$DryRun
 )
 
+# ---------------------------------------------------------------------------
+# winget packages
+# ---------------------------------------------------------------------------
 $basePackages = @(
   'Git.Git',
   'Fish.Fish',
@@ -18,28 +22,49 @@ $basePackages = @(
   'sharkdp.bat',
   'BurntSushi.ripgrep.MSVC',
   'sharkdp.fd',
-  'tmux.tmux'
+  'eza-community.eza'
 )
 
 $fullPackages = @(
-  'JanDeDobbeleer.OhMyPosh'
+  'JanDeDobbeleer.OhMyPosh',
+  'Neovim.Neovim'
 )
 
 $packages = @($basePackages)
-if ($Mode -eq 'full') {
-  $packages += $fullPackages
-}
+if ($Mode -eq 'full') { $packages += $fullPackages }
 
-if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
-  Write-Warning 'winget not found; install dependencies manually.'
-  return
-}
+# ---------------------------------------------------------------------------
+# PowerShell modules
+# ---------------------------------------------------------------------------
+$psModules = @('PSReadLine', 'PSFzf', 'posh-git')
 
 if ($DryRun) {
-  Write-Host "[DRY-RUN] winget packages: $($packages -join ', ')"
+  Write-Host "[DRY-RUN] winget packages : $($packages -join ', ')"
+  Write-Host "[DRY-RUN] PS modules      : $($psModules -join ', ')"
   return
 }
 
-foreach ($pkg in $packages) {
-  winget install --id $pkg --accept-package-agreements --accept-source-agreements -e
+# winget
+if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+  Write-Warning 'winget not found. Install the App Installer from the Microsoft Store, then re-run.'
+} else {
+  foreach ($pkg in $packages) {
+    Write-Host "[INFO] winget install $pkg"
+    winget install --id $pkg --accept-package-agreements --accept-source-agreements -e
+  }
+}
+
+# PS modules
+foreach ($mod in $psModules) {
+  if (-not (Get-Module -ListAvailable -Name $mod -ErrorAction SilentlyContinue)) {
+    Write-Host "[INFO] Installing PS module: $mod"
+    try {
+      Install-Module -Name $mod -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop
+      Write-Host "[ OK ] Installed: $mod" -ForegroundColor Green
+    } catch {
+      Write-Warning "Could not install $mod — install manually: Install-Module $mod"
+    }
+  } else {
+    Write-Host "[INFO] Module already installed: $mod"
+  }
 }
