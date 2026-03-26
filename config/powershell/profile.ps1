@@ -11,7 +11,7 @@ $STRoot = $global:SHARKTERMINAL_ROOT
 $ActiveProfile = Join-Path $STRoot 'powershell/active-profile.ps1'
 
 if (Test-Path $ActiveProfile) {
-  . $ActiveProfile
+  . "$ActiveProfile"
 } else {
   Write-Host '[SharkTerminal] No active PowerShell profile found. Run install.ps1 to configure.' -ForegroundColor Yellow
 }
