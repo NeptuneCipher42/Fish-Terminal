@@ -54,12 +54,14 @@ if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
   }
 }
 
-# PS modules
+# PS modules — trust PSGallery first to suppress interactive prompts
+Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted -ErrorAction SilentlyContinue
+
 foreach ($mod in $psModules) {
   if (-not (Get-Module -ListAvailable -Name $mod -ErrorAction SilentlyContinue)) {
     Write-Host "[INFO] Installing PS module: $mod"
     try {
-      Install-Module -Name $mod -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop
+      Install-Module -Name $mod -Repository PSGallery -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop
       Write-Host "[ OK ] Installed: $mod" -ForegroundColor Green
     } catch {
       Write-Warning "Could not install $mod — install manually: Install-Module $mod"

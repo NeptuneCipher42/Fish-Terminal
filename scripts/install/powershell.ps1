@@ -98,12 +98,15 @@ if ($Existing -notmatch 'sharkterminal') {
 # ---------------------------------------------------------------------------
 # Install PowerShell modules
 # ---------------------------------------------------------------------------
+# Trust PSGallery silently so Install-Module never prompts interactively
+Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted -ErrorAction SilentlyContinue
+
 $Modules = @('PSReadLine', 'PSFzf', 'posh-git')
 foreach ($mod in $Modules) {
   if (-not (Get-Module -ListAvailable -Name $mod -ErrorAction SilentlyContinue)) {
     Write-Info "Installing PS module: $mod"
     try {
-      Install-Module -Name $mod -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop
+      Install-Module -Name $mod -Repository PSGallery -Scope CurrentUser -Force -AllowClobber -ErrorAction Stop
       Write-Ok "Installed: $mod"
     } catch {
       Write-Warn "Could not install $mod — install manually: Install-Module $mod"
