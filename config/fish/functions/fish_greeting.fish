@@ -12,7 +12,7 @@ function fish_greeting
         set term_width 80
     end
     echo ""
-    set_color 5fd7ff
+    set_color BD93F9
     echo "🐙  Cracken's Cavern  🐙"
     set_color normal
     echo ""
@@ -33,24 +33,24 @@ function fish_greeting
                 end
 
                 if test -n "$right"
-                    set_color 5fd7ff
+                    set_color BD93F9
                     printf "%-30s" "$left"
-                    set_color brblue
+                    set_color FF79C6
                     printf "  %s\n" "$right"
                 else
-                    set_color 5fd7ff
+                    set_color BD93F9
                     printf "%s\n" "$left"
                 end
             end
         else
-            set_color 5fd7ff
+            set_color BD93F9
             command cat "$kraken_banner"
-            set_color brblue
+            set_color FF79C6
             command cat "$fishterm_banner"
         end
         set_color normal
     else
-        set_color brblue
+        set_color FF79C6
         echo "FISHTERM"
         set_color normal
     end

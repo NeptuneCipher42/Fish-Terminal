@@ -88,7 +88,7 @@ $KrakenBanner  = Join-Path $STRoot 'banner/kraken.txt'
 $FishtermBanner = Join-Path $STRoot 'banner/fishterm.txt'
 
 Write-Host ''
-Write-Host '🐙  Cracken''s Cavern  🐙' -ForegroundColor Cyan
+Write-Host '🐙  Cracken''s Cavern  🐙' -ForegroundColor Magenta
 Write-Host ''
 
 if ((Test-Path $KrakenBanner) -and (Test-Path $FishtermBanner)) {
@@ -104,18 +104,18 @@ if ((Test-Path $KrakenBanner) -and (Test-Path $FishtermBanner)) {
       $Left  = if ($i -lt $LeftLines.Count)  { $LeftLines[$i] }  else { '' }
       $Right = if ($i -lt $RightLines.Count) { $RightLines[$i] } else { '' }
       if ($Right) {
-        Write-Host ('{0,-30}' -f $Left) -ForegroundColor Cyan -NoNewline
-        Write-Host "  $Right" -ForegroundColor Blue
+        Write-Host ('{0,-30}' -f $Left) -ForegroundColor Magenta -NoNewline
+        Write-Host "  $Right" -ForegroundColor DarkMagenta
       } else {
-        Write-Host $Left -ForegroundColor Cyan
+        Write-Host $Left -ForegroundColor Magenta
       }
     }
   } else {
-    $LeftLines  | ForEach-Object { Write-Host $_ -ForegroundColor Cyan }
-    $RightLines | ForEach-Object { Write-Host $_ -ForegroundColor Blue }
+    $LeftLines  | ForEach-Object { Write-Host $_ -ForegroundColor Magenta }
+    $RightLines | ForEach-Object { Write-Host $_ -ForegroundColor DarkMagenta }
   }
 } else {
-  Write-Host 'FISHTERM' -ForegroundColor Blue
+  Write-Host 'FISHTERM' -ForegroundColor DarkMagenta
 }
 
 Write-Host ''

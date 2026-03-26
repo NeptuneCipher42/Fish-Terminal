@@ -52,10 +52,13 @@
       "newline": true,
       "segments": [
         {
-          "type": "text",
+          "type": "exit",
           "style": "plain",
-          "foreground": "#5FD7FF",
-          "template": "🐟 "
+          "foreground": "#50FA7B",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}#FF5555{{ end }}"
+          ],
+          "template": "❯ "
         }
       ]
     }
