@@ -17,13 +17,30 @@ bash install.sh --full --profile shark
 > **Note:** Add `exec fish` to `.bashrc` or `.zshrc` to auto-start fish on terminal boot (or let the installer do it for you).
 
 ### Windows (PowerShell 7+)
+
+**Step 1 — Install PowerShell 7**
+
+Open Windows PowerShell (the built-in one) and run:
+```powershell
+winget search --id Microsoft.PowerShell
+```
+Then install the stable release:
+```powershell
+winget install --id Microsoft.PowerShell --source winget
+```
+Or install the preview if you want the latest features:
+```powershell
+winget install --id Microsoft.PowerShell.Preview --source winget
+```
+Close the window and reopen using **PowerShell 7** (`pwsh`) — not the old Windows PowerShell.
+
+**Step 2 — Clone and install**
 ```powershell
 git clone https://github.com/NeptuneCipher42/Fish-Terminal.git SharkTerminal
 cd SharkTerminal
 pwsh -ExecutionPolicy Bypass -File .\install.ps1 -Full -Profile shark
 ```
 
-> **Prerequisites:** [PowerShell 7+](https://aka.ms/install-powershell) and [winget](https://aka.ms/getwinget) (ships with Windows 11; install App Installer from the Microsoft Store on Windows 10).
 > **Nerd Font:** Install a [Nerd Font](https://www.nerdfonts.com/) (e.g. CaskaydiaCove NF) and set it as your terminal font for prompt icons to render correctly.
 
 ---
