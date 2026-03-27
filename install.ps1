@@ -10,7 +10,7 @@ param(
   [switch]$Full,
   [switch]$DryRun,
   [ValidateSet('shark','clean','tide')]
-  [string]$Profile = 'shark'
+  [string]$SharkProfile = 'shark'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -25,7 +25,7 @@ function Write-Ok   ($msg) { Write-Host "[ OK ] $msg" -ForegroundColor Green }
 
 Write-Info 'SharkTerminal installer (PowerShell)'
 Write-Info "Mode    : $Mode"
-Write-Info "Profile : $Profile"
+Write-Info "Profile : $SharkProfile"
 if ($DryRun) { Write-Info 'Dry run enabled — no changes will be made.' }
 
 # ---------------------------------------------------------------------------
@@ -38,8 +38,8 @@ Write-Info 'Stage 1: Installing system dependencies...'
 # Stage 2 — Deploy PowerShell config + Oh My Posh themes
 # ---------------------------------------------------------------------------
 Write-Info 'Stage 2: Deploying PowerShell configuration...'
-$PSProfile = if ($Profile -eq 'tide') { 'shark' } else { $Profile }  # tide is fish-only; PS uses shark fallback
-& (Join-Path $Root 'scripts/install/powershell.ps1') -SharkProfile $PSProfile -DryRun:$DryRun
+$PSTheme = if ($SharkProfile -eq 'tide') { 'shark' } else { $SharkProfile }
+& (Join-Path $Root 'scripts/install/powershell.ps1') -SharkProfile $PSTheme -DryRun:$DryRun
 
 # ---------------------------------------------------------------------------
 # Stage 3 — Deploy fish config (if fish is available — WSL/Git Bash)
@@ -49,7 +49,7 @@ if (Get-Command fish -ErrorAction SilentlyContinue) {
   if ($DryRun) {
     Write-Info 'DRY-RUN: Would run scripts/install/fish.sh'
   } else {
-    bash (Join-Path $Root 'scripts/install/fish.sh') $Profile
+    bash (Join-Path $Root 'scripts/install/fish.sh') $SharkProfile
   }
 } else {
   Write-Info 'Stage 3: Fish not found — skipping fish config (Windows-native PowerShell install).'
