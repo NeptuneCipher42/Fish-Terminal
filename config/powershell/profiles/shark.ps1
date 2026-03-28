@@ -7,6 +7,13 @@
 #################################################################################################
 $STRoot = if ($global:SHARKTERMINAL_ROOT) { $global:SHARKTERMINAL_ROOT } else { Join-Path $HOME '.config/sharkterminal' }
 
+# ---------------------------------------------------------------------------
+# UTF-8 everywhere — required for emoji and Nerd Font glyphs to render
+# ---------------------------------------------------------------------------
+[Console]::InputEncoding  = [System.Text.Encoding]::UTF8
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding           = [System.Text.Encoding]::UTF8
+
 # VS Code shell integration (enables terminal links, run-in-terminal, etc.)
 if ($env:TERM_PROGRAM -eq 'vscode') {
   $vscodeIntegration = code --locate-shell-integration-path pwsh 2>$null
