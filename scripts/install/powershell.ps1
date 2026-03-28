@@ -16,11 +16,10 @@ $InstallDir = Join-Path $HOME '.config/sharkterminal'
 $PSInstall  = Join-Path $InstallDir 'powershell'
 $ThemeDir   = Join-Path $InstallDir 'themes'
 $BannerDir  = Join-Path $InstallDir 'banner'
-# Resolve $PROFILE safely — if shadowed by a parent script param, fall back to the standard PS7 path
-$PSProfilePath = [System.Management.Automation.Runspaces.Runspace]::DefaultRunspace.SessionStateProxy.GetVariable('PROFILE')
+# Resolve $PROFILE — param is named $SharkProfile (not $Profile) so $PROFILE is never shadowed
+$PSProfilePath = $PROFILE
 if ([string]::IsNullOrEmpty($PSProfilePath)) {
   $PSProfilePath = Join-Path $HOME 'Documents\PowerShell\Microsoft.PowerShell_profile.ps1'
-  Write-Warn "Could not auto-resolve `$PROFILE — using fallback: $PSProfilePath"
 }
 
 function Write-Info ($msg) { Write-Host "[INFO] $msg" }
