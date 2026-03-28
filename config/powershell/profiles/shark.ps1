@@ -82,13 +82,17 @@ function ..  { Set-Location .. }
 function ... { Set-Location ../.. }
 
 # ---------------------------------------------------------------------------
-# Greeting — mirrors fish_greeting.fish (side-by-side on wide terminals)
+# Greeting — mirrors fish_greeting.fish with exact #FF79C6 / #BD93F9 colors
 # ---------------------------------------------------------------------------
-$KrakenBanner  = Join-Path $STRoot 'banner/kraken.txt'
+$KrakenBanner   = Join-Path $STRoot 'banner/kraken.txt'
 $FishtermBanner = Join-Path $STRoot 'banner/fishterm.txt'
 
+$Pink   = "`e[38;2;255;121;198m"   # #FF79C6
+$Purple = "`e[38;2;189;147;249m"   # #BD93F9
+$Reset  = "`e[0m"
+
 Write-Host ''
-Write-Host '🐙  Cracken''s Cavern  🐙' -ForegroundColor Magenta
+Write-Host "${Pink}🐙  Cracken's Cavern  🐙${Reset}"
 Write-Host ''
 
 if ((Test-Path $KrakenBanner) -and (Test-Path $FishtermBanner)) {
@@ -103,19 +107,25 @@ if ((Test-Path $KrakenBanner) -and (Test-Path $FishtermBanner)) {
     for ($i = 0; $i -lt $MaxLines; $i++) {
       $Left  = if ($i -lt $LeftLines.Count)  { $LeftLines[$i] }  else { '' }
       $Right = if ($i -lt $RightLines.Count) { $RightLines[$i] } else { '' }
+      $RightColor = if ($i % 2 -eq 0) { $Pink } else { $Purple }
       if ($Right) {
-        Write-Host ('{0,-30}' -f $Left) -ForegroundColor Magenta -NoNewline
-        Write-Host "  $Right" -ForegroundColor DarkMagenta
+        $Padded = $Left.PadRight(30)
+        Write-Host "${Purple}${Padded}${Reset}  ${RightColor}${Right}${Reset}"
       } else {
-        Write-Host $Left -ForegroundColor Magenta
+        Write-Host "${Purple}${Left}${Reset}"
       }
     }
   } else {
-    $LeftLines  | ForEach-Object { Write-Host $_ -ForegroundColor Magenta }
-    $RightLines | ForEach-Object { Write-Host $_ -ForegroundColor DarkMagenta }
+    $LeftLines  | ForEach-Object { Write-Host "${Purple}${_}${Reset}" }
+    $i = 0
+    $RightLines | ForEach-Object {
+      $c = if ($i % 2 -eq 0) { $Pink } else { $Purple }
+      Write-Host "${c}${_}${Reset}"
+      $i++
+    }
   }
 } else {
-  Write-Host 'FISHTERM' -ForegroundColor DarkMagenta
+  Write-Host "${Pink}FISHTERM${Reset}"
 }
 
 Write-Host ''
