@@ -46,9 +46,9 @@
             "{{ if or .Working.Changed .Staging.Changed }}#FF5555{{ end }}"
           ],
           "properties": {
-            "fetch_status": true
+            "fetch_status": false
           },
-          "template": " \ue0a0 {{ .HEAD }}{{ if .Working.Changed }} ~{{ end }}{{ if .Staging.Changed }} +{{ end }} "
+          "template": " {{ .HEAD }}{{ if .Working.Changed }} ~{{ end }}{{ if .Staging.Changed }} +{{ end }} "
         }
       ]
     },

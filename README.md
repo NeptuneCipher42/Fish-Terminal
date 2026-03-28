@@ -38,7 +38,7 @@ Close the window and reopen using **PowerShell 7** (`pwsh`) — not the old Wind
 ```powershell
 git clone https://github.com/NeptuneCipher42/Fish-Terminal.git SharkTerminal
 cd SharkTerminal
-pwsh -ExecutionPolicy Bypass -File .\install.ps1 -Full -Profile shark
+pwsh -ExecutionPolicy Bypass -File .\install.ps1 -Full -SharkProfile shark
 ```
 
 > **Nerd Font:** Install a [Nerd Font](https://www.nerdfonts.com/) (e.g. CaskaydiaCove NF) and set it as your terminal font for prompt icons to render correctly.
@@ -206,9 +206,9 @@ Defined in `config/fish/plugins.txt`:
 
 | Command | Description |
 |---------|-------------|
-| `pwsh -File .\install.ps1 -Full -Profile shark` | Full install with shark profile |
-| `pwsh -File .\install.ps1 -Minimal -Profile clean` | Minimal install |
-| `pwsh -File .\install.ps1 -DryRun -Full -Profile shark` | Preview without executing |
+| `pwsh -File .\install.ps1 -Full -SharkProfile shark` | Full install with shark profile |
+| `pwsh -File .\install.ps1 -Minimal -SharkProfile clean` | Minimal install |
+| `pwsh -File .\install.ps1 -DryRun -Full -SharkProfile shark` | Preview without executing |
 | `pwsh -File .\scripts\switch-profile.ps1 -Profile shark` | Switch to shark profile |
 | `pwsh -File .\scripts\switch-profile.ps1 -Profile clean` | Switch to clean profile |
 
