@@ -19,8 +19,8 @@
           "type": "path",
           "style": "powerline",
           "powerline_symbol": "",
-          "foreground": "#5FD7FF",
-          "background": "#0D2137",
+          "foreground": "#0B1220",
+          "background": "#BD93F9",
           "properties": {
             "style": "agnoster",
             "max_depth": 3,
@@ -33,24 +33,18 @@
           "style": "powerline",
           "powerline_symbol": "",
           "foreground": "#0B1220",
-          "background": "#FF79C6",
-          "background_templates": [
-            "{{ if and (gt .Behind 0) (gt .Ahead 0) }}#FF5555{{ end }}",
-            "{{ if gt .Behind 0 }}#FFB86C{{ end }}",
-            "{{ if gt .Ahead 0 }}#5FD7FF{{ end }}",
-            "{{ if or (.Working.Changed) (.Staging.Changed) }}#FF00A0{{ end }}"
-          ],
+          "background": "#BD93F9",
           "properties": {
             "fetch_status": true
           },
-          "template": " {{ .HEAD }}{{ if .Working.Changed }} ~{{ end }}{{ if .Staging.Changed }} +{{ end }}{{ if gt .Behind 0 }} ↓{{ .Behind }}{{ end }}{{ if gt .Ahead 0 }} ↑{{ .Ahead }}{{ end }} "
+          "template": " {{ .HEAD }}{{ if .Working.Changed }} ~{{ end }}{{ if .Staging.Changed }} +{{ end }} "
         },
         {
           "type": "time",
           "style": "powerline",
           "powerline_symbol": "",
           "foreground": "#0B1220",
-          "background": "#5FD7FF",
+          "background": "#FF79C6",
           "template": "  {{ .CurrentDate | date \"15:04\" }} "
         }
       ]
@@ -63,7 +57,7 @@
         {
           "type": "exit",
           "style": "plain",
-          "foreground": "#50FA7B",
+          "foreground": "#BD93F9",
           "foreground_templates": [
             "{{ if gt .Code 0 }}#FF5555{{ end }}"
           ],

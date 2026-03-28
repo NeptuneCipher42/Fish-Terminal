@@ -35,11 +35,7 @@ function fish_greeting
                 if test -n "$right"
                     set_color BD93F9
                     printf "%-30s" "$left"
-                    if test (math "$i % 2") -eq 1
-                        set_color FF79C6
-                    else
-                        set_color C8A0FF
-                    end
+                    set_color BD93F9
                     printf "  %s\n" "$right"
                 else
                     set_color BD93F9
@@ -49,7 +45,7 @@ function fish_greeting
         else
             set_color BD93F9
             command cat "$kraken_banner"
-            set_color FF79C6
+            set_color BD93F9
             command cat "$fishterm_banner"
         end
         set_color normal
