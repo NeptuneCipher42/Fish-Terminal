@@ -35,7 +35,11 @@ function fish_greeting
                 if test -n "$right"
                     set_color BD93F9
                     printf "%-30s" "$left"
-                    set_color FF79C6
+                    if test (math "$i % 2") -eq 1
+                        set_color FF79C6
+                    else
+                        set_color C8A0FF
+                    end
                     printf "  %s\n" "$right"
                 else
                     set_color BD93F9
