@@ -2,12 +2,6 @@
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
   "version": 2,
   "final_space": true,
-  "transient_prompt": {
-    "background": "transparent",
-    "foreground": "#50FA7B",
-    "foreground_templates": ["{{ if gt .Code 0 }}#FF5555{{ end }}"],
-    "template": "{{ if gt .Code 0 }}💀{{ else }}🦈{{ end }} ❯ "
-  },
   "blocks": [
     {
       "type": "prompt",
@@ -16,17 +10,17 @@
         {
           "type": "session",
           "style": "powerline",
-          "powerline_symbol": "\uE0B0",
-          "foreground": "#0A0F1E",
-          "background": "#00FF9C",
+          "powerline_symbol": "",
+          "foreground": "#0B1220",
+          "background": "#5FD7FF",
           "template": " 🦈 {{ .UserName }} "
         },
         {
           "type": "path",
           "style": "powerline",
-          "powerline_symbol": "\uE0B0",
-          "foreground": "#5FD7FF",
-          "background": "#0D2137",
+          "powerline_symbol": "",
+          "foreground": "#E6F7FF",
+          "background": "#1B4D66",
           "properties": {
             "style": "agnoster",
             "max_depth": 3,
@@ -37,41 +31,17 @@
         {
           "type": "git",
           "style": "powerline",
-          "powerline_symbol": "\uE0B0",
-          "foreground": "#0A0F1E",
-          "background": "#00FF9C",
-          "background_templates": [
-            "{{ if and (gt .Behind 0) (gt .Ahead 0) }}#FF5555{{ end }}",
-            "{{ if gt .Behind 0 }}#FFB86C{{ end }}",
-            "{{ if gt .Ahead 0 }}#00B4D8{{ end }}",
-            "{{ if or (.Working.Changed) (.Staging.Changed) }}#FF79C6{{ end }}"
-          ],
-          "properties": {
-            "fetch_status": true
-          },
-          "template": "  {{ .HEAD }}{{ if .Working.Changed }} ~{{ end }}{{ if .Staging.Changed }} \u271A{{ end }}{{ if gt .Behind 0 }} \u2193{{ .Behind }}{{ end }}{{ if gt .Ahead 0 }} \u2191{{ .Ahead }}{{ end }} "
+          "powerline_symbol": "",
+          "foreground": "#0B1220",
+          "background": "#FF79C6",
+          "template": " {{ .HEAD }}{{ if .Working.Changed }} *{{ end }} "
         },
         {
-          "type": "executiontime",
-          "style": "powerline",
-          "powerline_symbol": "\uE0B0",
-          "foreground": "#0A0F1E",
-          "background": "#BD93F9",
-          "properties": {
-            "threshold": 2000
-          },
-          "template": "  {{ .FormattedMs }} "
-        }
-      ]
-    },
-    {
-      "type": "prompt",
-      "alignment": "right",
-      "segments": [
-        {
           "type": "time",
-          "style": "plain",
-          "foreground": "#FFB86C",
+          "style": "powerline",
+          "powerline_symbol": "",
+          "foreground": "#0B1220",
+          "background": "#5FD7FF",
           "template": "  {{ .CurrentDate | date \"15:04\" }} "
         }
       ]
