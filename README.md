@@ -1,156 +1,112 @@
-# SharkTerminal
-<img width="1252" height="483" alt="image" src="https://github.com/user-attachments/assets/0e9235aa-6e83-4718-b84d-73cfdbd8d702" />
+<div align="center">
 
-Fish-first terminal customization with shark vibes, Oh My Posh default, Tide fallback, plugin automation, cross-platform install scripts — and a massively upgraded **FishVim** Neovim config built for 2025/2026.
+<img width="1252" height="483" alt="SharkTerminal Banner" src="https://github.com/user-attachments/assets/0e9235aa-6e83-4718-b84d-73cfdbd8d702" />
+
+<p><strong>Cracken's Cavern — The Hacker's Terminal</strong></p>
+
+<p>
+<img src="https://img.shields.io/badge/Fish_Shell-4E89C5?style=for-the-badge&logo=gnu-bash&logoColor=white" />
+<img src="https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=powershell&logoColor=white" />
+<img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" />
+<img src="https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white" />
+<img src="https://img.shields.io/badge/Windows-0078D4?style=for-the-badge&logo=windows&logoColor=white" />
+<img src="https://img.shields.io/badge/Oh_My_Posh-088F8F?style=for-the-badge&logo=iterm2&logoColor=white" />
+</p>
+
+</div>
+
+> A cross-platform shark-themed terminal framework — fish shell + PowerShell, Oh My Posh prompt engine, modern CLI tool replacements, Fisher plugin automation, three switchable profiles, and safe timestamped backups. One command installs everything.
+
+---
+
+## What's Inside
+
+| Category | Stack |
+|---|---|
+| **Shell (Unix)** | `fish` with Oh My Posh (shark theme) + Tide fallback |
+| **Shell (Windows)** | `PowerShell 7+` with matching shark Oh My Posh theme |
+| **Prompt Engine** | `oh-my-posh` — powerline prompt, transient mode, git status |
+| **Fallback Prompt** | `tide` — native fish prompt engine (lean style) |
+| **Plugin Manager** | `fisher` — declarative `plugins.txt` manifest |
+| **Fuzzy Finder** | `fzf` + `fzf.fish` / `PSFzf` — `Ctrl+F` files, `Ctrl+R` history |
+| **Smart `cd`** | `zoxide` — frecency-based directory jumping (`z <dir>`) |
+| **`ls` replacement** | `eza` — colors, git integration, tree view |
+| **`cat` replacement** | `bat` — syntax highlighting, git diff support |
+| **`find` replacement** | `fd` — faster, respects `.gitignore` |
+| **`grep` replacement** | `ripgrep` — blazing fast, recursive by default |
+| **Git diff viewer** | `delta` — side-by-side diffs (full install mode) |
+| **System monitor** | `btop` — resource viewer |
+| **Multiplexer** | `tmux` — terminal session management |
+| **Greeting** | Kraken + FISHTERM dual ASCII art banners (Braille unicode) |
+| **Profiles** | `shark` (full aesthetic) · `clean` (minimal) · `tide` (native fish) |
+| **Themes** | `shark.omp.json` (pink/purple powerline) · `clean.omp.json` (cyan minimal) |
+| **Windows Terminal** | `Shark Dark` color scheme fragment (dark navy + Dracula ANSI palette) |
 
 ---
 
 ## Quick Start
 
-### Linux/macOS
+Clone the repo and run one install command for your OS.
+
+### Linux / macOS
+
 ```bash
 git clone https://github.com/NeptuneCipher42/Fish-Terminal.git SharkTerminal
 cd SharkTerminal
 bash install.sh --full --profile shark
 ```
 
-> **Note:** Add `exec fish` to `.bashrc` or `.zshrc` to auto-start fish on terminal boot (or let the installer do it for you).
-
 ### Windows (PowerShell 7+)
 
-**Step 1 — Install PowerShell 7**
+**Step 1 — Install PowerShell 7** (skip if already installed)
 
-Open Windows PowerShell (the built-in one) and run:
-```powershell
-winget search --id Microsoft.PowerShell
-```
-Then install the stable release:
 ```powershell
 winget install --id Microsoft.PowerShell --source winget
 ```
-Or install the preview if you want the latest features:
-```powershell
-winget install --id Microsoft.PowerShell.Preview --source winget
-```
-Close the window and reopen using **PowerShell 7** (`pwsh`) — not the old Windows PowerShell.
+
+Close and reopen using **PowerShell 7** (`pwsh`) — not Windows PowerShell 5.
 
 **Step 2 — Clone and install**
+
 ```powershell
 git clone https://github.com/NeptuneCipher42/Fish-Terminal.git SharkTerminal
 cd SharkTerminal
 pwsh -ExecutionPolicy Bypass -File .\install.ps1 -Full -SharkProfile shark
 ```
 
-> **Nerd Font:** Install a [Nerd Font](https://www.nerdfonts.com/) (e.g. CaskaydiaCove NF) and set it as your terminal font for prompt icons to render correctly.
+> **Nerd Font required** — install [CaskaydiaCove NF](https://www.nerdfonts.com/) and set it as your terminal font for prompt icons and ASCII banners to render correctly.
 
 ---
 
-## What You Get
+## Install Modes
 
-### Shell — PowerShell (Windows)
-- Same **shark Oh My Posh theme** as the fish setup — `🦈 user › path › git branch › time` powerline prompt
-- `PSReadLine` with history prediction and list-view suggestions
-- `PSFzf` fuzzy finder — `Ctrl+F` for files, `Ctrl+R` for history
-- `zoxide` smart `cd` with `z <dir>` shortcuts
-- `posh-git` git status integration
-- Modern CLI aliases: `ll`, `la`, `cat` (bat), `ls` (eza) — same shortcuts as fish
-- Git shortcuts: `gs`, `ga`, `gc`, `gp`, `gpl`, `gl`
-- Side-by-side ASCII art greeting on wide terminals (Cracken's Cavern banner)
-- Profile switching: `shark` (full) and `clean` (minimal)
-- Safe timestamped backup of existing `$PROFILE` before install
+| Flag | Effect |
+|---|---|
+| `--full` / `-Full` | All CLI tools + Oh My Posh + Nerd Fonts + delta + (Windows) neovim |
+| `--minimal` / `-Minimal` | Core tools only — fish, git, fzf, zoxide, eza, bat, ripgrep, fd |
+| `--dry-run` / `-DryRun` | Preview every action without making changes |
+| `--profile shark\|clean\|tide` | Set active profile at install time (default: `shark`) |
 
-### Shell — Fish Terminal
-- Shark-themed greeting with dual ASCII art banners (Kraken + FISHTERM logo)
-- Oh My Posh default theme with Tide fallback profile
-- Modern CLI replacements: `eza` (ls), `bat` (cat), `zoxide` (cd), `fd` (find), `ripgrep` (grep)
-- Git shortcuts: `gs`, `ga`, `gc`, `gp`, `gpl`
-- FZF fuzzy finder with fd backend (hidden files, .git excluded)
-- Fisher plugins pre-configured (fzf.fish, z, sponge, done, tide)
-- Profile switching between `shark`, `clean`, and `tide`
-- Safe timestamped backups + full uninstall/restore
+---
 
-### FishVim — Neovim Config (2025 Edition)
-A production-grade Neovim setup built from current best practices (r/neovim, LazyVim, kickstart.nvim, dotfyle.com rankings).
+## After Install
 
-#### Plugin Highlights (70+ plugins)
+### Fish
+```fish
+fisher update      # Update all plugins
+fish_greeting      # Preview the ASCII greeting
+```
 
-| Category | Plugins |
-|----------|---------|
-| **Plugin Manager** | lazy.nvim (with startup profiler) |
-| **Meta Plugin** | snacks.nvim (dashboard, notifier, indent, scroll, lazygit, zen, words, bigfile) |
-| **Completion** | blink.cmp (replaced nvim-cmp — faster, typo-resistant, async) |
-| **LSP** | nvim-lspconfig + mason.nvim + mason-lspconfig (15+ servers) |
-| **Formatting** | conform.nvim (format on save, LSP fallback) |
-| **Linting** | nvim-lint (eslint_d, ruff, shellcheck, luacheck, golangci-lint) |
-| **Syntax** | nvim-treesitter + textobjects + context (30+ parsers) |
-| **Fuzzy Finder** | Telescope + fzf-native sorter |
-| **File Explorer** | nvim-tree (sidebar) + oil.nvim (edit filesystem as buffer) |
-| **Git Inline** | gitsigns.nvim (hunk staging, blame, diff) |
-| **Git Workflow** | neogit (Magit-style) + diffview.nvim + git-conflict.nvim |
-| **AI Coding** | codecompanion.nvim (Claude/GPT/Ollama chat + inline diffs) |
-| **Search/Replace** | grug-far.nvim (ripgrep-powered, LazyVim default) |
-| **Markdown** | render-markdown.nvim (renders headings, code blocks, tables in-buffer) |
-| **Code Outline** | aerial.nvim (LSP + treesitter symbol navigator) |
-| **Navigation** | flash.nvim (jump anywhere) + harpoon2 (file bookmarks) |
-| **Text Objects** | mini.ai (extended: functions, classes, args, quotes, buffer) |
-| **Utilities** | mini.move, mini.splitjoin, mini.bufremove, mini.hipatterns |
-| **Debugging** | nvim-dap + nvim-dap-ui + nvim-dap-virtual-text |
-| **Testing** | neotest + Go/Python/Vitest adapters |
-| **Statusline** | lualine.nvim (cyberpunk FishVim theme with LSP client, diff, clock) |
-| **Bufferline** | bufferline.nvim |
-| **UI** | noice.nvim (cmdline popup, LSP docs) + dressing.nvim |
-| **Sessions** | auto-session |
-| **Snippets** | LuaSnip + friendly-snippets |
-| **Colorscheme** | Tokyo Night — heavily cyberpunk-customized (neon green, electric blue, magenta) |
+### PowerShell
+```powershell
+Update-Module PSReadLine   # Update core module
+# Ctrl+F — file finder
+# Ctrl+R — history search
+```
 
-#### Language Server Support (via Mason)
-`lua` `typescript/javascript` `python` `go` `rust` `svelte` `graphql` `html` `css` `json` `yaml` `toml` `bash` `docker` `markdown` `terraform`
-
-#### Keymaps — Space as Leader
-
-| Keymap | Action |
-|--------|--------|
-| `<Space>ff` | Find files (Telescope) |
-| `<Space>fs` | Live grep |
-| `<Space>fr` | Recent files |
-| `<Space>gg` | LazyGit (snacks float) |
-| `<Space>gn` | Neogit (full git workflow) |
-| `<Space>gd` | Diffview |
-| `<Space>ee` | File explorer (nvim-tree) |
-| `-` | Oil file browser (parent dir) |
-| `<Space>lo` | Code outline (aerial) |
-| `<Space>aa` | AI actions (CodeCompanion) |
-| `<Space>ac` | AI chat toggle |
-| `<Space>ai` | AI inline prompt |
-| `<Space>sr` | Search & replace (grug-far) |
-| `<Space>ld` | Line diagnostics |
-| `<Space>lr` | Rename symbol |
-| `<Space>la` | Code actions |
-| `<Space>uz` | Zen mode |
-| `<Space>ut` | Float terminal |
-| `<Space>um` | Toggle markdown rendering |
-| `s` | Flash jump |
-| `S` | Flash treesitter jump |
-| `<Space>ha` | Harpoon add file |
-| `<Space>hh` | Harpoon menu |
-| `]f` / `[f` | Next / prev function (treesitter) |
-| `]d` / `[d` | Next / prev diagnostic |
-| `]]` / `[[` | Next / prev word reference |
-
-#### Neovim 0.11 Features Enabled
-- `vim.treesitter.foldexpr()` — native treesitter-powered folding
-- Inlay hints toggle (`<Space>uh`)
-- Diagnostic virtual lines toggle (`<Space>uL`)
-- Smooth scrolling (`smoothscroll = true`)
-- Built-in Lua bytecode caching (impatient.nvim not needed)
-- Disabled unused built-in plugins (gzip, matchit, netrw, tutor, etc.) for fast startup
-
-#### AI Setup
-Set one of these environment variables to enable AI features:
+### Verify installation
 ```bash
-export ANTHROPIC_API_KEY="sk-ant-..."   # Claude (recommended — claude-sonnet-4-6)
-export OPENAI_API_KEY="sk-..."          # GPT-4o
-# GitHub Models (free): no key needed if GITHUB_TOKEN is set
+bash scripts/verify.sh
 ```
 
 ---
@@ -158,19 +114,21 @@ export OPENAI_API_KEY="sk-..."          # GPT-4o
 ## Profiles
 
 | Profile | Fish | PowerShell | Description |
-|---------|------|------------|-------------|
+|---|---|---|---|
 | `shark` | ✅ | ✅ | Full shark aesthetic — Oh My Posh + Nerd Font icons + ASCII greeting |
-| `clean` | ✅ | ✅ | Minimal Oh My Posh theme, lean visuals |
-| `tide`  | ✅ | ➡️ shark | Native fish Tide engine (PS falls back to shark) |
+| `clean` | ✅ | ✅ | Minimal Oh My Posh theme, lean visuals, no ASCII art |
+| `tide` | ✅ | ➡ shark | Native Tide fish prompt (PowerShell falls back to shark) |
 
-Switch profiles — fish:
+Switch profiles at any time — no reinstall needed.
+
+**Fish:**
 ```bash
 bash scripts/switch-profile.sh shark
 bash scripts/switch-profile.sh clean
 bash scripts/switch-profile.sh tide
 ```
 
-Switch profiles — PowerShell:
+**PowerShell:**
 ```powershell
 pwsh -File .\scripts\switch-profile.ps1 -Profile shark
 pwsh -File .\scripts\switch-profile.ps1 -Profile clean
@@ -178,112 +136,252 @@ pwsh -File .\scripts\switch-profile.ps1 -Profile clean
 
 ---
 
-## Fish Plugins
-Defined in `config/fish/plugins.txt`:
-- `jorgebucaran/fisher` — plugin manager
-- `PatrickF1/fzf.fish` — fzf integration
-- `jethrokuan/z` — directory jumping
-- `meaningful-ooo/sponge` — smart history cleanup
-- `franciscolourenco/done` — command completion notifications
-- `ilancosman/tide` — fallback prompt engine
+## Prompt Design
+
+### Shark Theme (`shark.omp.json`)
+
+A three-segment powerline prompt with transient mode:
+
+| Segment | Content | Color |
+|---|---|---|
+| Left 1 | 🦈 + username | Pink `#FF79C6` |
+| Left 2 | Path (agnoster, max 3 dirs, home icon) | Purple `#BD93F9` |
+| Left 3 | Git branch + status | Pink / Red `#FF5555` if dirty |
+| Right | Time (3:04 PM) | Purple |
+| Transient | `🦈` on success · `💀` on error | — |
+
+### Clean Theme (`clean.omp.json`)
+
+Single segment — path only in cyan `#7FDBCA`. No decorations, no modules.
+
+### Windows Terminal — Shark Dark Scheme
+
+| Property | Value |
+|---|---|
+| Background | `#0B1220` (dark navy) |
+| Foreground | `#F8F8F2` (off-white) |
+| Cursor | `#FF79C6` (pink) |
+| ANSI palette | Dracula-inspired |
+| Font | CaskaydiaCove Nerd Font, 11pt |
+
+Apply the fragment at `config/windows-terminal/settings-fragment.json` in Windows Terminal settings.
 
 ---
 
-## Main Commands
+## Fish Plugins
 
-### Linux/macOS (bash)
+Declared in `config/fish/plugins.txt` — installed automatically by Fisher during setup.
+
+| Plugin | Purpose |
+|---|---|
+| `jorgebucaran/fisher` | Plugin manager |
+| `PatrickF1/fzf.fish` | `Ctrl+F` file finder, `Ctrl+R` history, `Ctrl+Alt+F` directory |
+| `jethrokuan/z` | Frecency-based directory jumping |
+| `meaningful-ooo/sponge` | Remove failed commands from history |
+| `franciscolourenco/done` | Desktop notification when long commands finish |
+| `ilancosman/tide@v6` | Native fish prompt engine (tide profile fallback) |
+
+---
+
+## Aliases & Shortcuts
+
+### Shared Aliases (fish + PowerShell)
+
+| Alias | Expands To | Notes |
+|---|---|---|
+| `ll` | `eza -lh --git` | Long list with git status |
+| `la` | `eza -lah --git` | Long list, show hidden |
+| `ls` | `eza` | Color, icons |
+| `cat` | `bat --style=plain` | Syntax-highlighted output |
+| `..` | `cd ..` | Up one dir |
+| `...` | `cd ../..` | Up two dirs |
+
+### Git Shortcuts
+
+| Alias | Command |
+|---|---|
+| `gs` | `git status -sb` |
+| `ga` | `git add` |
+| `gc` | `git commit` |
+| `gp` | `git push` |
+| `gpl` | `git pull --rebase` |
+| `gd` | `git diff` |
+| `gl` | `git log --oneline --graph` |
+
+### FZF & Navigation
+
+| Key | Action |
+|---|---|
+| `Ctrl+F` | Fuzzy file finder |
+| `Ctrl+R` | Fuzzy history search |
+| `Ctrl+Alt+F` | Directory finder (fish only) |
+| `z <dir>` | Jump to frecent directory (zoxide) |
+| `zi` | Interactive zoxide picker |
+
+---
+
+## PowerShell Module Stack
+
+| Module / Tool | Purpose |
+|---|---|
+| `PSReadLine` | History prediction, ListView suggestions, 5000-entry history |
+| `PSFzf` | Lazy-loaded on first `Ctrl+F`/`Ctrl+R` (saves ~400ms startup) |
+| `oh-my-posh` | Shark powerline prompt |
+| `zoxide` | Smart cd |
+| `eza` + `bat` | Modern ls/cat replacements |
+
+---
+
+## Command Reference
+
+### Linux / macOS
 
 | Command | Description |
-|---------|-------------|
-| `bash install.sh --full --profile shark` | Full install with shark profile |
-| `bash install.sh --minimal --profile clean` | Minimal install |
-| `bash install.sh --dry-run --full --profile shark` | Preview without executing |
-| `bash scripts/verify.sh` | Verify installation |
-| `bash scripts/switch-profile.sh shark` | Switch to shark profile |
-| `bash uninstall.sh` | Uninstall and restore backups |
+|---|---|
+| `bash install.sh --full --profile shark` | Full install, shark profile |
+| `bash install.sh --minimal --profile clean` | Minimal install, clean profile |
+| `bash install.sh --dry-run --full --profile shark` | Preview — no changes |
+| `bash scripts/verify.sh` | Post-install verification |
+| `bash scripts/switch-profile.sh shark` | Activate shark profile |
+| `bash scripts/switch-profile.sh clean` | Activate clean profile |
+| `bash scripts/switch-profile.sh tide` | Activate tide profile |
+| `bash update.sh` | Pull latest + redeploy config |
+| `bash update.sh --no-pull` | Redeploy config without git pull |
+| `bash uninstall.sh` | Remove config + restore latest backup |
 
 ### Windows (PowerShell)
 
 | Command | Description |
-|---------|-------------|
-| `pwsh -File .\install.ps1 -Full -SharkProfile shark` | Full install with shark profile |
+|---|---|
+| `pwsh -File .\install.ps1 -Full -SharkProfile shark` | Full install, shark profile |
 | `pwsh -File .\install.ps1 -Minimal -SharkProfile clean` | Minimal install |
-| `pwsh -File .\install.ps1 -DryRun -Full -SharkProfile shark` | Preview without executing |
-| `pwsh -File .\scripts\switch-profile.ps1 -Profile shark` | Switch to shark profile |
-| `pwsh -File .\scripts\switch-profile.ps1 -Profile clean` | Switch to clean profile |
+| `pwsh -File .\install.ps1 -DryRun -Full -SharkProfile shark` | Preview — no changes |
+| `pwsh -File .\scripts\switch-profile.ps1 -Profile shark` | Activate shark profile |
+| `pwsh -File .\scripts\switch-profile.ps1 -Profile clean` | Activate clean profile |
 
-See full command list in `docs/COMMANDS.md`.
+See full reference in `docs/COMMANDS.md`.
 
 ---
 
 ## Project Structure
+
 ```
 SharkTerminal/
-├── install.sh              # Linux/macOS entry point
-├── install.ps1             # Windows/PowerShell entry point
-├── uninstall.sh            # Uninstall + restore (Linux/macOS)
-├── update.sh               # Config-only updater (Linux/macOS)
+├── install.sh                      # Linux/macOS entry point
+├── install.ps1                     # Windows/PowerShell entry point
+├── uninstall.sh                    # Uninstall + restore from backup
+├── update.sh                       # Config-only updater (safe for servers)
+│
 ├── config/
-│   ├── fish/               # Fish shell config, profiles, plugins, banners
-│   └── powershell/         # PowerShell profiles (shark, clean)
+│   ├── fish/
+│   │   ├── config.fish             # Runtime config (sources env, aliases, profile)
+│   │   ├── plugins.txt             # Fisher plugin manifest
+│   │   ├── conf.d/
+│   │   │   ├── aliases.fish        # eza/bat/git/nav aliases
+│   │   │   └── env.fish            # EDITOR, PAGER, fzf backend, zoxide init
+│   │   ├── functions/
+│   │   │   └── fish_greeting.fish  # Kraken + FISHTERM ASCII greeting
+│   │   ├── profiles/
+│   │   │   ├── shark.fish          # Oh My Posh shark theme
+│   │   │   ├── clean.fish          # Oh My Posh minimal theme
+│   │   │   └── tide.fish           # Native Tide prompt
+│   │   └── banner/
+│   │       ├── kraken.txt          # Octopus ASCII art (Braille unicode)
+│   │       └── fishterm.txt        # FISHTERM block-letter logo
+│   │
+│   ├── powershell/
+│   │   ├── profile.ps1             # Entry point (dot-sourced from $PROFILE)
+│   │   └── profiles/
+│   │       ├── shark.ps1           # Full profile — OMP, PSReadLine, PSFzf, zoxide
+│   │       └── clean.ps1           # Minimal profile
+│   │
+│   └── windows-terminal/
+│       └── settings-fragment.json  # Shark Dark color scheme
+│
+├── themes/
+│   ├── shark.omp.json              # Pink/purple powerline + transient prompt
+│   └── clean.omp.json              # Minimal cyan theme
+│
 ├── scripts/
-│   ├── os/                 # OS-specific dependency installers
-│   ├── install/            # Config + prompt install internals
-│   │   ├── fish.sh         # Fish config deployer
-│   │   ├── powershell.ps1  # PowerShell config deployer
-│   │   ├── omp.sh          # Oh My Posh installer (Linux/macOS)
-│   │   ├── tools.sh        # CLI tools installer (Linux/macOS)
-│   │   └── fonts.sh        # Nerd Fonts installer
-│   ├── switch-profile.sh   # Profile switcher (bash)
-│   └── switch-profile.ps1  # Profile switcher (PowerShell — fish + PS)
-├── themes/                 # Oh My Posh JSON themes (shared by fish + PS)
-└── docs/                   # Commands + troubleshooting
+│   ├── lib/
+│   │   ├── log.sh                  # Logging helpers (info/warn/ok/die)
+│   │   └── common.sh               # OS detection, prerequisite checks
+│   ├── os/
+│   │   ├── linux.sh                # apt / dnf / pacman dependency installer
+│   │   ├── macos.sh                # Homebrew installer
+│   │   └── windows.ps1             # winget + PS module installer
+│   ├── install/
+│   │   ├── fish.sh                 # Fish config deployer + Fisher bootstrap
+│   │   ├── powershell.ps1          # PowerShell config deployer
+│   │   ├── omp.sh                  # Oh My Posh installer
+│   │   ├── fonts.sh                # Nerd Font installer
+│   │   └── tools.sh                # Shared tooling layer
+│   ├── switch-profile.sh           # Profile switcher (fish)
+│   ├── switch-profile.ps1          # Profile switcher (PowerShell)
+│   └── verify.sh                   # Post-install verification
+│
+└── docs/
+    ├── COMMANDS.md                 # Full command reference
+    └── TROUBLESHOOTING.md          # Common issues + fixes
 ```
 
-FishVim Neovim config lives in `~/.config/nvim/lua/fisher/`:
+---
+
+## Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| Icons show as boxes/squares | Install a [Nerd Font](https://www.nerdfonts.com/) and set it in your terminal |
+| `oh-my-posh` not found | Run `bash scripts/verify.sh` — switch to tide: `bash scripts/switch-profile.sh tide` |
+| Fish not auto-starting | Add `exec fish` to `~/.bashrc` or let the installer inject the handoff block |
+| Fisher plugins fail to install | Check internet access; run `fisher update` inside fish |
+| Missing tools (`eza`, `bat`, etc.) | Re-run `bash install.sh --full` or install the tool manually |
+| PowerShell prompt blank | Confirm `oh-my-posh` is on PATH; run `oh-my-posh --version` in `pwsh` |
+| PSFzf not working | Run `Get-Module PSFzf -ListAvailable`; install via `Install-Module PSFzf` |
+
+**Full diagnostics:**
+```bash
+bash scripts/verify.sh
 ```
-lua/fisher/
-├── core/
-│   ├── options.lua         # Neovim options (0.11 features enabled)
-│   └── keymaps.lua         # Global keymaps (Space leader)
-├── lazy.lua                # lazy.nvim bootstrap + perf opts
-└── plugins/
-    ├── snacks.lua           # Meta-plugin: dashboard, notifier, indent, lazygit...
-    ├── cmp.lua              # blink.cmp completion
-    ├── treesitter.lua       # Syntax + textobjects + context
-    ├── oil.lua              # Filesystem-as-buffer editor
-    ├── neogit.lua           # Neogit + diffview + git-conflict
-    ├── ai.lua               # CodeCompanion AI assistant
-    ├── aerial.lua           # Code outline
-    ├── grug-far.lua         # Search & replace
-    ├── render-markdown.lua  # In-buffer markdown rendering
-    ├── mini.lua             # mini.ai, mini.move, mini.splitjoin, mini.hipatterns
-    ├── lsp/
-    │   ├── mason.lua        # Mason installer (15+ servers)
-    │   └── config.lua       # LSP setup + LspAttach keymaps
-    └── ...30+ more plugins
+
+**Restore previous config:**
+```bash
+bash uninstall.sh   # removes current config, restores timestamped backup
+```
+
+---
+
+## Safety & Backups
+
+- **Dry run first:** `--dry-run` / `-DryRun` previews every action without touching your system.
+- **Fish backup:** existing `~/.config/fish/` is copied to `~/.config/fish.backups/YYYYMMDD-HHMMSS/` before any changes.
+- **PowerShell backup:** `$PROFILE` is backed up to `~/.config/sharkterminal/backups/powershell/` with a timestamp.
+- **Idempotent injection:** the installer only appends a small sourcing block to `$PROFILE` — it checks for an existing block and skips if present.
+- **Re-runnable:** installers are safe to run again on existing setups.
+- **Shell handoff bypass:** set `SHARKTERMINAL_NO_HANDOFF=1` to prevent auto-entering fish from bash/zsh.
+
+**Uninstall PowerShell integration:**
+```powershell
+# Remove the block between these markers in $PROFILE:
+# >>> SharkTerminal PowerShell >>>  ...  # <<< SharkTerminal PowerShell <<<
+# Then delete: ~/.config/sharkterminal/
 ```
 
 ---
 
 ## Notes
 
-### Safety
-- **Dry run first:** `--dry-run` / `-DryRun` shows every action without making changes.
-- **Existing `$PROFILE` is backed up** to `~/.config/sharkterminal/backups/powershell/` before install.
-- **Idempotent injection:** the PowerShell installer only appends a small sourcing block to `$PROFILE` — it never overwrites it. If the block is already there, it's skipped.
-- **Existing fish config backed up** to `~/.config/fish.backups/` with timestamps.
-- Re-runnable installers — safe to run again on existing setups.
+- First install requires internet access (package manager, Fisher, Oh My Posh)
+- Some tool downloads fail in offline or blocked DNS environments — use `--minimal` for air-gapped machines
+- On Debian/Ubuntu: `batcat` is symlinked to `bat`, `fdfind` to `fd` automatically
+- On Arch: `eza` and `bat` are in the official repos
+- macOS: Homebrew is required — install from [brew.sh](https://brew.sh)
+- If `delta` fails on Linux, ensure `unzip` is installed: `apt install unzip`
 
-### PowerShell
-- Deployed config lives in `~/.config/sharkterminal/powershell/` — separate from `$PROFILE`.
-- To uninstall PS integration: remove the `# >>> SharkTerminal PowerShell >>>` block from `$PROFILE` and delete `~/.config/sharkterminal/`.
-- If OMP fails to render icons, set a [Nerd Font](https://www.nerdfonts.com/) in your terminal emulator settings.
+---
 
-### Fish (Linux/macOS)
-- If OMP fails, switch to `tide` profile: `bash scripts/switch-profile.sh tide`
-- Fish handoff block added to `~/.bashrc` / `~/.zshrc` automatically.
-- Bypass fish handoff: `export SHARKTERMINAL_NO_HANDOFF=1`
+## Author
 
-### Neovim
-- Startup time: `nvim --startuptime /tmp/startup.log` → analyze with `:Lazy profile`
+**Nicholas Fisher**
+
+[![GitHub](https://img.shields.io/badge/GitHub-NeptuneCipher42-181717?style=flat&logo=github&logoColor=white)](https://github.com/NeptuneCipher42)
