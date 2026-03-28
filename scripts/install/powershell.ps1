@@ -105,7 +105,7 @@ if ($Existing -notmatch 'sharkterminal') {
 # Trust PSGallery silently so Install-Module never prompts interactively
 Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted -ErrorAction SilentlyContinue
 
-$Modules = @('PSReadLine', 'PSFzf', 'posh-git')
+$Modules = @('PSReadLine', 'PSFzf')
 foreach ($mod in $Modules) {
   if (-not (Get-Module -ListAvailable -Name $mod -ErrorAction SilentlyContinue)) {
     Write-Info "Installing PS module: $mod"

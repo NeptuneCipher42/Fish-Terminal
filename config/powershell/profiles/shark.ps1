@@ -7,6 +7,12 @@
 #################################################################################################
 $STRoot = if ($global:SHARKTERMINAL_ROOT) { $global:SHARKTERMINAL_ROOT } else { Join-Path $HOME '.config/sharkterminal' }
 
+# VS Code shell integration (enables terminal links, run-in-terminal, etc.)
+if ($env:TERM_PROGRAM -eq 'vscode') {
+  $vscodeIntegration = code --locate-shell-integration-path pwsh 2>$null
+  if ($vscodeIntegration) { . $vscodeIntegration }
+}
+
 # ---------------------------------------------------------------------------
 # Oh My Posh — shark theme
 # ---------------------------------------------------------------------------
@@ -18,24 +24,34 @@ if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
 }
 
 # ---------------------------------------------------------------------------
-# PSReadLine — history prediction and better key bindings
+# PSReadLine — optimized: deduplication, capped history, no ding, HistoryAndPlugin
 # ---------------------------------------------------------------------------
 if (Get-Module -ListAvailable -Name PSReadLine -ErrorAction SilentlyContinue) {
   Import-Module PSReadLine
-  Set-PSReadLineOption -PredictionSource History
+  Set-PSReadLineOption -PredictionSource HistoryAndPlugin
   Set-PSReadLineOption -PredictionViewStyle ListView
+  Set-PSReadLineOption -MaximumHistoryCount 5000
+  Set-PSReadLineOption -HistoryNoDuplicates $true
+  Set-PSReadLineOption -DingTone 0
   Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
   Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
   Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+  Set-PSReadLineKeyHandler -Key Ctrl+d -Function DeleteCharOrExit
 }
 
 # ---------------------------------------------------------------------------
-# PSFzf — fuzzy finder (Ctrl+F for files, Ctrl+R for history)
+# PSFzf — lazy-loaded on first Ctrl+F / Ctrl+R (saves ~400ms startup)
 # ---------------------------------------------------------------------------
-if (Get-Module -ListAvailable -Name PSFzf -ErrorAction SilentlyContinue) {
-  Import-Module PSFzf
-  Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory 'Ctrl+r'
+function global:_LoadPSFzf {
+  if (-not (Get-Module PSFzf -ErrorAction SilentlyContinue)) {
+    if (Get-Module -ListAvailable -Name PSFzf -ErrorAction SilentlyContinue) {
+      Import-Module PSFzf
+      Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+f' -PSReadlineChordReverseHistory 'Ctrl+r'
+    }
+  }
 }
+Set-PSReadLineKeyHandler -Key Ctrl+f -ScriptBlock { _LoadPSFzf; Invoke-FzfTabCompletion }
+Set-PSReadLineKeyHandler -Key Ctrl+r -ScriptBlock { _LoadPSFzf; Invoke-FuzzyHistory }
 
 # ---------------------------------------------------------------------------
 # zoxide — smarter cd
@@ -44,12 +60,7 @@ if (Get-Command zoxide -ErrorAction SilentlyContinue) {
   Invoke-Expression (& { (zoxide init powershell | Out-String) })
 }
 
-# ---------------------------------------------------------------------------
-# posh-git — git status in prompt (used alongside Oh My Posh)
-# ---------------------------------------------------------------------------
-if (Get-Module -ListAvailable -Name posh-git -ErrorAction SilentlyContinue) {
-  Import-Module posh-git
-}
+# posh-git removed — Oh My Posh handles all git display natively
 
 # ---------------------------------------------------------------------------
 # Modern CLI aliases (mirrors fish aliases.fish)
