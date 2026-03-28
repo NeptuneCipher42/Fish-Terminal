@@ -33,7 +33,7 @@
             "max_depth": 3,
             "home_icon": "~"
           },
-          "template": " \ue5fe {{ .Path }} "
+          "template": " {{ .Path }} "
         },
         {
           "type": "git",
@@ -63,7 +63,7 @@
           "trailing_diamond": "\ue0b0",
           "foreground": "#0B1220",
           "background": "#BD93F9",
-          "template": " \uf017 {{ .CurrentDate | date \"3:04 PM\" }} "
+          "template": " {{ .CurrentDate | date \"3:04 PM\" }} "
         }
       ]
     },
