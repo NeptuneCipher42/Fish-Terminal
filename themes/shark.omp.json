@@ -27,7 +27,7 @@
           "leading_diamond": "\ue0b0",
           "trailing_diamond": "\ue0b0",
           "foreground": "#0B1220",
-          "background": "#FF79C6",
+          "background": "#BD93F9",
           "properties": {
             "style": "agnoster",
             "max_depth": 3,
@@ -41,7 +41,7 @@
           "leading_diamond": "\ue0b0",
           "trailing_diamond": "\ue0b0",
           "foreground": "#0B1220",
-          "background": "#BD93F9",
+          "background": "#FF79C6",
           "background_templates": [
             "{{ if or .Working.Changed .Staging.Changed }}#FF5555{{ end }}"
           ],
