@@ -9,43 +9,39 @@
       "segments": [
         {
           "type": "session",
-          "style": "powerline",
-          "powerline_symbol": "",
+          "style": "plain",
           "foreground": "#0B1220",
           "background": "#FF79C6",
           "template": " 🦈 {{ .UserName }} "
         },
         {
           "type": "path",
-          "style": "powerline",
-          "powerline_symbol": "",
+          "style": "plain",
           "foreground": "#0B1220",
-          "background": "#BD93F9",
+          "background": "#FF79C6",
           "properties": {
             "style": "agnoster",
             "max_depth": 3,
             "home_icon": "~"
           },
-          "template": "  {{ .Path }} "
+          "template": "◇ {{ .Path }} "
         },
         {
           "type": "git",
-          "style": "powerline",
-          "powerline_symbol": "",
+          "style": "plain",
           "foreground": "#0B1220",
           "background": "#BD93F9",
           "properties": {
             "fetch_status": true
           },
-          "template": " {{ .HEAD }}{{ if .Working.Changed }} ~{{ end }}{{ if .Staging.Changed }} +{{ end }} "
+          "template": "◇ {{ .HEAD }}{{ if .Working.Changed }} ~{{ end }}{{ if .Staging.Changed }} +{{ end }} "
         },
         {
           "type": "time",
-          "style": "powerline",
-          "powerline_symbol": "",
+          "style": "plain",
           "foreground": "#0B1220",
-          "background": "#FF79C6",
-          "template": "  {{ .CurrentDate | date \"15:04\" }} "
+          "background": "#BD93F9",
+          "template": "◇  {{ .CurrentDate | date \"15:04\" }} "
         }
       ]
     },
