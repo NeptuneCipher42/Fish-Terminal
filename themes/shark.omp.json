@@ -2,6 +2,11 @@
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
   "version": 2,
   "final_space": true,
+  "transient_prompt": {
+    "background": "transparent",
+    "foreground": "#BD93F9",
+    "template": "{{ if gt .Code 0 }}💀{{ else }}🦈{{ end }} ❯ "
+  },
   "blocks": [
     {
       "type": "prompt",
@@ -9,14 +14,18 @@
       "segments": [
         {
           "type": "session",
-          "style": "plain",
+          "style": "diamond",
+          "leading_diamond": "\ue0b6",
+          "trailing_diamond": "\ue0b0",
           "foreground": "#0B1220",
           "background": "#FF79C6",
           "template": " 🦈 {{ .UserName }} "
         },
         {
           "type": "path",
-          "style": "plain",
+          "style": "diamond",
+          "leading_diamond": "\ue0b0",
+          "trailing_diamond": "\ue0b0",
           "foreground": "#0B1220",
           "background": "#FF79C6",
           "properties": {
@@ -24,24 +33,37 @@
             "max_depth": 3,
             "home_icon": "~"
           },
-          "template": "◇ {{ .Path }} "
+          "template": " \ue5fe {{ .Path }} "
         },
         {
           "type": "git",
-          "style": "plain",
+          "style": "diamond",
+          "leading_diamond": "\ue0b0",
+          "trailing_diamond": "\ue0b4",
           "foreground": "#0B1220",
           "background": "#BD93F9",
+          "background_templates": [
+            "{{ if or .Working.Changed .Staging.Changed }}#FF5555{{ end }}"
+          ],
           "properties": {
             "fetch_status": true
           },
-          "template": "◇ {{ .HEAD }}{{ if .Working.Changed }} ~{{ end }}{{ if .Staging.Changed }} +{{ end }} "
-        },
+          "template": " \ue0a0 {{ .HEAD }}{{ if .Working.Changed }} ~{{ end }}{{ if .Staging.Changed }} +{{ end }} "
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "segments": [
         {
           "type": "time",
-          "style": "plain",
+          "style": "diamond",
+          "leading_diamond": "\ue0b6",
+          "trailing_diamond": "\ue0b4",
           "foreground": "#0B1220",
           "background": "#BD93F9",
-          "template": "◇  {{ .CurrentDate | date \"15:04\" }} "
+          "template": " \uf017 {{ .CurrentDate | date \"15:04\" }} "
         }
       ]
     },
