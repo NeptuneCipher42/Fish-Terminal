@@ -1,5 +1,5 @@
 # SharkTerminal
-<img width="854" height="389" alt="image" src="https://github.com/user-attachments/assets/941699db-36a0-4079-9c21-b0c28cbefae4" />
+<img width="1252" height="483" alt="image" src="https://github.com/user-attachments/assets/0e9235aa-6e83-4718-b84d-73cfdbd8d702" />
 
 Fish-first terminal customization with shark vibes, Oh My Posh default, Tide fallback, plugin automation, cross-platform install scripts — and a massively upgraded **FishVim** Neovim config built for 2025/2026.
 
