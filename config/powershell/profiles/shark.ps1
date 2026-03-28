@@ -31,7 +31,7 @@ if (Get-Module -ListAvailable -Name PSReadLine -ErrorAction SilentlyContinue) {
   Set-PSReadLineOption -PredictionSource HistoryAndPlugin
   Set-PSReadLineOption -PredictionViewStyle ListView
   Set-PSReadLineOption -MaximumHistoryCount 5000
-  Set-PSReadLineOption -HistoryNoDuplicates $true
+  Set-PSReadLineOption -HistoryNoDuplicates
   Set-PSReadLineOption -DingTone 0
   Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
   Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
