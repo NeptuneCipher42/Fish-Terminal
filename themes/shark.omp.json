@@ -31,9 +31,9 @@
           "properties": {
             "style": "agnoster",
             "max_depth": 3,
-            "home_icon": "~"
+            "home_icon": "🏠"
           },
-          "template": " {{ .Path }} "
+          "template": " 📂 {{ .Path }} "
         },
         {
           "type": "git",
@@ -48,7 +48,7 @@
           "properties": {
             "fetch_status": false
           },
-          "template": " {{ .HEAD }}{{ if .Working.Changed }} ~{{ end }}{{ if .Staging.Changed }} +{{ end }} "
+          "template": " 🌿 {{ .HEAD }}{{ if .Working.Changed }} ~{{ end }}{{ if .Staging.Changed }} +{{ end }} "
         }
       ]
     },
@@ -63,7 +63,7 @@
           "trailing_diamond": "\ue0b0",
           "foreground": "#0B1220",
           "background": "#BD93F9",
-          "template": " {{ .CurrentDate | date \"3:04 PM\" }} "
+          "template": " 🕰️ {{ .CurrentDate | date \"3:04 PM\" }} "
         }
       ]
     },
