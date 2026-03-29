@@ -4,7 +4,7 @@
   "final_space": true,
   "transient_prompt": {
     "background": "transparent",
-    "foreground": "#BD93F9",
+    "foreground": "#B53AAE",
     "template": "{{ if gt .Code 0 }}💀{{ else }}🦈{{ end }} ❯ "
   },
   "blocks": [
@@ -27,7 +27,7 @@
           "leading_diamond": "\ue0b0",
           "trailing_diamond": "\ue0b0",
           "foreground": "#0B1220",
-          "background": "#BD93F9",
+          "background": "#B53AAE",
           "properties": {
             "style": "agnoster",
             "max_depth": 3,
@@ -62,7 +62,7 @@
           "leading_diamond": "\ue0b2",
           "trailing_diamond": "\ue0b0",
           "foreground": "#0B1220",
-          "background": "#BD93F9",
+          "background": "#B53AAE",
           "template": " 🕰️ {{ .CurrentDate | date \"3:04 PM\" }} "
         }
       ]
@@ -75,7 +75,7 @@
         {
           "type": "exit",
           "style": "plain",
-          "foreground": "#BD93F9",
+          "foreground": "#B53AAE",
           "foreground_templates": [
             "{{ if gt .Code 0 }}#FF5555{{ end }}"
           ],
